@@ -1,0 +1,34 @@
+<ui:composition
+	 xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+     template="/templates/login_template.xhtml">
+       <ui:define name="content">
+        <h:form>
+         <p:messages id="messages" />
+             <div class="ui-g">
+                    <div class="ui-g-12">
+                        <h1>Sign-in</h1>
+                    </div>
+                    <div class="ui-g-12">
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText id="username" value="#{webUserBean.name}" autocomplete="off" />
+                            <p:watermark for="username" value="Username" id="usernameWatermark" />
+                        </h:panelGroup>
+                    </div>
+                    <div class="ui-g-12">
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:password id="password" value="#{webUserBean.password}" autocomplete="off" />
+                            <p:watermark for="password" value="Password" id="passwordWatermark" />
+                        </h:panelGroup>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:commandButton action="#{webUserBean.login}"
+							value="Login" ajax="false"></p:commandButton>
+                    </div>
+                </div>
+          </h:form>
+		</ui:define>
+</ui:composition>

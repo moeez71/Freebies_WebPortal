@@ -1,0 +1,58 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pm="http://primefaces.org/serenity">
+
+    <div class="layout-sidebar #{guestPreferences.darkMenu ? 'layout-sidebar-dark' : ''}">
+        <div class="sidebar-logo">
+           <a href="http://planetbeyond.co.uk">
+            <p:graphicImage name="images/pblogos.png" styleClass="content" />
+                 <span class="app-name">MENU</span>
+            </a>
+            <a href="#" class="sidebar-anchor" title="Toggle Menu"></a>
+        </div>
+
+        <div class="nano">
+            <div class="nano-content sidebar-scroll-content">
+                <div class="layout-menu-container">
+                    <h:form id="menuform">
+                        <pm:menu>
+                      
+                        
+                     <ui:remove>
+                  
+                            --></ui:remove>  
+                            
+                           
+                            
+                            
+                            <p:menuitem id="sr_lnk101" value="Facts" icon="&#xE8D2;" url="/fact.faces" /> 
+                            
+                            <p:menuitem id="sr_add_show_host" value="Add Client" icon="&#xe7fe;" outcome="/add_client.faces" />
+                            
+                            <p:submenu id="sr_default12" label="Ad Schedule " icon="&#xE8D2;">
+                                
+                                <p:menuitem id="sr_schedule_show" value="Schedule Ad" icon="&#xe878;" outcome="/schedule_ad.faces" /> 
+                                
+                                
+                            </p:submenu>
+                            
+                             <p:submenu id="sr_default123" label="Offer of the Day " icon="&#xE8D2;">
+                           		 <p:menuitem id="sr_offer_of_the_day" value="Offer of the day" icon="&#xE8D2;" outcome="/offer_of_day.faces" /> 
+                            	<p:menuitem id="sr_offer_of_the_day1" value="Add offer category" icon="&#xE8D2;" outcome="/offer_category.faces" /> 
+                                   
+                            </p:submenu>
+                             <p:menuitem id="sr_logout" value="Logout" icon="&#xe879;" action="#{webUserBean.logout}"/>
+                                                 
+                                
+                         </pm:menu>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>

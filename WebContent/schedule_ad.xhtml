@@ -1,0 +1,144 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+	<ui:define name="title">Schedule AD</ui:define>
+
+	<ui:define name="head">
+
+
+
+	</ui:define>
+
+	<ui:define name="content">
+		<div class="ui-g dashboard">
+
+			<h:form id="scheduleForm">
+				<p:messages id="messages" showDetail="false" autoUpdate="true"
+					closable="true" />
+				<div class="ui-g-6 schedule">
+					<p:growl id="message" showDetail="false" />
+					<p:panelGrid columnClasses="value" style="height:100%">
+						<h3 style="margin-top: 0">Ad Schedule</h3>
+						 <p:schedule id="schedule" value="#{scheduleView.lazyEventModel}"
+							timeZone="GMT+5" widgetVar="myschedule" draggable="false">
+							<p:ajax event="dateSelect"
+								listener="#{scheduleView.onDateSelect}" update="eventDetails"
+								oncomplete="PF('eventDialog').show();" />
+							<p:ajax event="eventSelect"
+								listener="#{scheduleView.onEventSelect}" update="eventDetails"
+								oncomplete="PF('eventDialog').show();" disabled="true" />
+							<p:ajax event="eventMove" listener="#{scheduleView.onEventMove}"
+								update="messages" disabled="true" />
+							<p:ajax event="eventResize"
+								listener="#{scheduleView.onEventResize}" update="messages" />
+						</p:schedule>
+						
+					</p:panelGrid>
+
+					<p:dialog widgetVar="eventDialog" header="Show Details"
+						showEffect="clip" hideEffect="clip">
+						<h:panelGrid id="eventDetails" columns="2">
+							<p:outputLabel for="name" value="Name:" />
+							<p:inputText id="name"
+								value="#{advertisementScheduleBean.name}" maxlength="200"
+								required="true" />
+
+							<p:outputLabel for="description" value="Description:" />
+							<p:inputText id="description"
+								value="#{advertisementScheduleBean.description}"
+								maxlength="200" required="true" />
+								
+							<p:outputLabel for="cs" value="Client:" />
+							<p:selectOneMenu  id="cs" value="#{advertisementScheduleBean.clientId}" required="true">
+								<f:selectItem itemLabel="Select One" itemValue=""/>
+                				<f:selectItems value="#{clientBean.getClientsList()}" var="client" itemLabel="#{client.clientName}" itemValue="#{client.clientId}"/>
+            				</p:selectOneMenu>
+            				
+            				
+							<p:outputLabel for="from" value="Date:" />
+							<p:calendar id="from"
+								value="#{advertisementScheduleBean.scheduledTimestamp}"
+								pattern="dd/MM/yyyy HH:mm" required="true" />
+								
+							<p:commandButton type="reset" value="Reset" />
+
+							<p:commandButton id="addButton" value="Save"
+								onclick="this.disabled=true" update=" message" ajax="true"
+								actionListener="#{advertisementScheduleBean.saveSchedule()}"
+								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+							
+
+						</h:panelGrid>
+					</p:dialog>
+				</div>
+
+
+			</h:form>
+ 
+ <p:dataTable id="lazyCategoryTable" styleClass="default_tab"
+				style="background:#dfdfdf; width:100%; margin-bottom:15px;"
+				var="u" value="#{advertisementScheduleBean.getlazyListofSchedules()}"
+				paginator="true"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15,20,30,40,60,100"
+				paginatorAlwaysVisible="true" paginatorPosition="bottom" rows="10"
+				emptyMessage="No Record found..." lazy="true">
+				<f:facet name="header">
+       				 List of Schedules
+  				  </f:facet>
+				<p:column headerText="Schedule Id">
+					<h:outputText value="#{u.scheduleId}" />
+
+				</p:column>
+
+				
+
+				<p:column headerText="Name">
+					<h:outputText value="#{u.name}" />
+
+				</p:column>
+				
+				<p:column headerText="Description">
+					<h:outputText value="#{u.description}" />
+
+				</p:column>
+				
+				<p:column headerText="Client">
+					<h:outputText value="#{u.getClientName(u.clientId)}" />
+
+				</p:column>
+				
+				<p:column headerText="Schedule Timestamp">
+					<h:outputText value="#{u.scheduledTimestamp}">
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+					</h:outputText>
+
+				</p:column>
+				
+				<p:column headerText="Created Timestamp">
+					<h:outputText value="#{u.creationTimestamp}">
+						<f:convertDateTime pattern="MM/dd/yyyy HH:mm" />
+					</h:outputText>
+
+				</p:column>
+				
+
+			
+
+				<p:column headerText="Action">
+					<p:button value="Open" outcome="advertisement">
+					<f:param name="id" value="#{u.scheduleId}" />
+					</p:button>
+					
+					
+				</p:column>
+
+			</p:dataTable>
+			
+		</div>
+	</ui:define>
+
+</ui:composition>

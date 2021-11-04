@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project
+    name="Freebies_Web"
+    default="war" >
+
+    <!-- ============ Project Settings ==================================== -->
+
+    <property environment="env" />
+
+    <property
+        name="PROJECT_HOME"
+        value="./" />
+
+    <property
+        name="BUILD_DIR"
+        value="${PROJECT_HOME}/war" />
+
+    <property
+        name="JAVA_BUILD_DIR"
+        value="${BUILD_DIR}/classes" />
+
+    <property
+        name="CONTENT_DIR"
+        value="${PROJECT_HOME}/WebContent" />
+
+    <property
+        name="JAVA_SRC_DIR"
+        value="${PROJECT_HOME}/src" />
+
+    <property
+        name="CONFIG"
+        value="${PROJECT_HOME}/config" />
+
+    <property
+        name="LIB_DIR"
+        value="${CONTENT_DIR}/WEB-INF/lib" />
+
+    <!-- ============ Modifications required ==================================== -->
+
+    <property
+        name="PROJECT_NAME"
+        value="freebies_web" />
+
+    <property
+        name="CONFIG_FILES_DIR"
+        value="${JAVA_SRC_DIR}" />
+
+    <property
+        name="TOMCAT_LIB_DIR"
+        value="${env.TOMCAT7_LIB_DIR}" />
+
+    <property
+        name="JRE_LIB_DIR"
+        value="${env.JRE8_LIB_DIR}" />
+
+    <path id="class.path" >
+
+        <fileset dir="${LIB_DIR}" >
+
+            <include name="*.jar" />
+        </fileset>
+
+        <fileset dir="${TOMCAT_LIB_DIR}" >
+
+            <include name="*.jar" />
+        </fileset>
+
+        <fileset dir="${JRE_LIB_DIR}" >
+
+            <include name="*.jar" />
+        </fileset>
+    </path>
+    <!-- =========== Clean ====================================================== -->
+
+    <target name="clean" >
+
+        <delete dir="${BUILD_DIR}" />
+    </target>
+
+    <!-- =========== Init System ================================================= -->
+
+    <target
+        name="init"
+        depends="clean" >
+
+        <tstamp>
+
+            <format
+                pattern="MMM d yyyy hh:mm aa"
+                property="now" />
+        </tstamp>
+        <!-- Create build dir -->
+
+        <mkdir dir="${BUILD_DIR}" />
+
+        <mkdir dir="${JAVA_BUILD_DIR}" />
+    </target>
+    <!-- =========== Compile Java Code =========================================== -->
+
+    <target
+        name="compile"
+        depends="init" >
+
+        <echo>
+Compile
+        </echo>
+
+        <javac
+            classpathref="class.path"
+            debug="on"
+            debuglevel="lines,vars,source"
+            destdir="${JAVA_BUILD_DIR}"
+            optimize="on" >
+
+            <src path="${JAVA_SRC_DIR}" />
+        </javac>
+    </target>
+
+    <!-- =========== Copy configuration files =========================================== -->
+
+    <target
+        name="configuration"
+        depends="compile" >
+
+        <echo>
+Copy configuration files
+        </echo>
+
+        <copy todir="${JAVA_BUILD_DIR}" >
+
+            <fileset
+                dir="${CONFIG_FILES_DIR}"
+                includes="**.xml" >
+            </fileset>
+
+            <fileset
+                dir="${CONFIG_FILES_DIR}"
+                includes="**.properties" >
+            </fileset>
+        </copy>
+    </target>
+
+    <!--
+    =========== Jar Process ================================================== 
+	<target name="jar" depends="compile">
+		 increase the build number 
+		<buildnumber />
+		<echo>Create Jar</echo>
+		<jar jarfile="${JAVA_BUILD_DIR}/${PROJECT_NAME}.jar">
+			<fileset dir="${JAVA_BUILD_DIR}">
+				<include name="uk/**" />
+			</fileset>
+		</jar>
+		<copy file="${JAVA_BUILD_DIR}/${PROJECT_NAME}.jar" todir="${LIB_DIR}" />
+	</target>
+    -->
+
+
+    <!-- =========== War DEV ======================================================= -->
+
+    <target
+        name="war"
+        depends="configuration" >
+
+        <echo>
+Building WAR
+        </echo>
+
+        <war
+            warfile="${BUILD_DIR}/${PROJECT_NAME}.war"
+            webxml="${CONTENT_DIR}/WEB-INF/web.xml" >
+
+            <manifest>
+
+                <attribute
+                    name="Built-By"
+                    value="${user.name}" />
+
+                <section name="section" >
+
+                    <attribute
+                        name="Implementation-Title"
+                        value="${PROJECT_NAME}" />
+
+                    <attribute
+                        name="Implementation-Build"
+                        value="${build.number}" />
+
+                    <attribute
+                        name="Implementation-Build-Date"
+                        value="${now}" />
+
+                    <attribute
+                        name="Implementation-Vendor"
+                        value="" />
+                </section>
+            </manifest>
+
+            <!-- include everything in content directory -->
+
+            <fileset dir="${CONTENT_DIR}" />
+
+            <lib dir="${JAVA_BUILD_DIR}" >
+
+                <include name="*.jar" />
+            </lib>
+
+            <classes dir="${BUILD_DIR}/classes" >
+
+                <exclude name="*.war" />
+            </classes>
+        </war>
+    </target>
+
+</project>

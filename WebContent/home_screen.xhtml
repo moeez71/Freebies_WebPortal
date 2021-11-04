@@ -1,0 +1,102 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	template="/templates/template.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+	<!-- Recommended shim for cross-browser WebRTC support. -->
+	<script src="https://webrtchacks.github.io/adapter/adapter-latest.js"></script>
+
+
+	<!-- <f:metadata>
+		<f:viewParam name="id" value="#{questionBean.showId}" />
+		<f:event type="preRenderView" listener="#{questionBean.init()}" />
+	</f:metadata> -->
+
+
+	<ui:define name="breadcrumb">
+		<li><p:link outcome="/home_screen">Home Screen </p:link></li>
+	</ui:define>
+
+
+	<ui:define name="content">
+		<p:messages id="messages" />
+		<br />
+
+		<div class="layout-content">
+			<div class="ui-g dashboard">
+
+				<div class="ui-g-12 ui-md-6">
+					<div class="overview-box overview-box-1">
+						<div class="overview-box-header"></div>
+						<div class="overview-box-content">
+							<div class="overview-box-icon">
+								<i class="material-icons"></i>
+							</div>
+							<div class="overview-box-title">
+								<H3>
+									<p:button outcome="fact" value="Facts"
+										>
+									</p:button>
+								</H3>
+							</div>
+							<div class="overview-box-count"></div>
+						</div>
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6">
+					<div class="overview-box overview-box-2">
+						<div class="overview-box-header"></div>
+						<div class="overview-box-content">
+							<div class="overview-box-icon">
+								<i class="material-icons"></i>
+							</div>
+							<div class="overview-box-title">
+								<H3><p:button  outcome="offer_of_day" value="Offer of the day"
+										>
+									</p:button></H3>
+							</div>
+							<div class="overview-box-count"></div>
+						</div>
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6" >
+					<div class="overview-box overview-box-3">
+						<div class="overview-box-header"></div>
+						<div class="overview-box-content">
+							<div class="overview-box-icon">
+
+								<i class="material-icons"></i>
+							</div>
+							<div class="overview-box-title">
+								<H3><p:button outcome="add_client" value="Clients"
+										>
+									</p:button></H3>
+							</div>
+							<div class="overview-box-count"></div>
+						</div>
+					</div>
+
+				</div>
+				<div class="ui-g-12 ui-md-6">
+					<div class="overview-box overview-box-4">
+						<div class="overview-box-header"></div>
+						<div class="overview-box-content">
+							<div class="overview-box-icon" >
+								<i class="material-icons" ></i>
+							</div>
+							<div class="overview-box-title">
+								<H3><p:button  outcome="schedule_ad" value="Schedule Ad"
+										>
+									</p:button></H3>
+							</div>
+							<div class="overview-box-count"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>

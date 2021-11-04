@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="freebies" default="init" >
+	
+	<!-- ============ Modifications required ====================================-->
+	<property environment="env" />
+	<property name="SQL2JAVA_BASE" value="${env.SQL2JAVA_BASE}" />
+	<property name="SQL2JAVA_PROPERTIES_FILE" value="./resources/sql2java/sql2java.properties" />
+	<property name="JAVA_SOURCE_FOLDER" value="./src" />
+	<property name="PROJECT_BASE_PACKAGE" value="uk/co/planetbeyond/service" />
+
+	<!-- =========== SQL2JAVA ====================================================== -->
+	<target name="init">
+		<copy  tofile="${SQL2JAVA_BASE}/src/config/sql2java.properties" file="${SQL2JAVA_PROPERTIES_FILE}" overwrite="true"/>
+		
+		<delete dir="${JAVA_SOURCE_FOLDER}/${PROJECT_BASE_PACKAGE}/generated" />
+		<delete dir="${SQL2JAVA_BASE}/generated" />
+		
+		<!--
+		<ant antfile="build.xml" dir="${SQL2JAVA_BASE}" inheritall="false" target="all" />
+		-->
+	</target>
+	
+	<target name="copy">
+			<copy todir="${JAVA_SOURCE_FOLDER}/${PROJECT_BASE_PACKAGE}/generated">
+						<fileset dir="${SQL2JAVA_BASE}/generated/java/${PROJECT_BASE_PACKAGE}/generated"></fileset>
+			</copy>
+		
+			<touch>
+			  <fileset dir="${JAVA_SOURCE_FOLDER}/${PROJECT_BASE_PACKAGE}/manager"/>
+			</touch>
+			<copy todir="${JAVA_SOURCE_FOLDER}/${PROJECT_BASE_PACKAGE}/manager" overwrite="false" verbose="true">
+								<fileset dir="${SQL2JAVA_BASE}/generated/java/${PROJECT_BASE_PACKAGE}/manager"></fileset>
+			</copy>
+		
+			<touch>
+			 	<fileset dir="${JAVA_SOURCE_FOLDER}/${PROJECT_BASE_PACKAGE}/managedbean"/>
+			</touch>
+			<copy todir="${JAVA_SOURCE_FOLDER}/${PROJECT_BASE_PACKAGE}/managedbean" overwrite="false" verbose="true" >
+										<fileset dir="${SQL2JAVA_BASE}/generated/java/${PROJECT_BASE_PACKAGE}/managedbean" ></fileset>
+			</copy>
+	</target>
+</project>

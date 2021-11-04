@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+	<ui:define name="breadcrumb">
+		<li><p:link outcome="/fact">Edit Show Category</p:link></li>
+	</ui:define>
+
+	 <f:metadata>
+		<f:viewParam name="id" value="#{factBean.factId}" />
+		<f:event type="preRenderView" listener="#{factBean.editFact()}" />
+	</f:metadata> 
+
+
+	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<div class="card">
+					<h:form id="newCategoryForm">
+						<p:messages id="messages" showDetail="false" autoUpdate="true"
+							closable="true" />
+						<p:fieldset legend="Edit Category"
+							style=" width:500px; margin-bottom:15px;">
+
+
+
+							<h:panelGrid columns="2"
+								style="margin-bottom:10px; background:#f1f1f1; border-radius:6px; width:500px;"
+								cellpadding="5" columnClasses="col1, col2">
+
+								
+								<p:outputLabel value="Fact" styleClass="labelstyle" />
+									
+								<p:inputTextarea  value="#{factBean.text}"
+								required="true" requiredMessage="Pelase Enter Adress" />
+
+								
+
+
+							</h:panelGrid>
+
+							<div align="right">
+								<p:commandButton value="Update"
+									action="#{factBean.updateFact()}" ajax="true"  >
+									
+								</p:commandButton>
+							</div>
+
+						</p:fieldset>
+
+
+
+					</h:form>
+
+				</div>
+			</div>
+		
+		</div>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+	<ui:define name="breadcrumb">
+		<li><p:link outcome="/offer_of_day">Offer of the day</p:link></li>
+	</ui:define>
+
+	<ui:define name="content">
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<div class="card">
+					<h:form id="newCategoryForm">
+						<p:messages id="messages" showDetail="false" autoUpdate="true"
+							closable="true" />
+						<p:fieldset legend="Name"
+							style=" width:500px; margin-bottom:15px;">
+
+
+
+							<h:panelGrid columns="2"
+								style="margin-bottom:10px; background:#f1f1f1; border-radius:6px; width:500px;"
+								cellpadding="5" columnClasses="col1, col2">
+
+								<p:outputLabel value="Name *"
+									styleClass="labelstyle" />
+								<p:inputText value="#{offerCategoryBean.name}"
+									style="width: 225px" required="true"
+									requiredMessage="Please Enter name"></p:inputText>
+
+					
+									
+									<p:outputLabel value="Type" styleClass="labelstyle" />
+								<p:inputText value="#{offerCategoryBean.type}" 
+									style="width: 225px"  required="true" placeholder="1=Daily, 2=facebook, 3=instagram..."
+									requiredMessage="Please Enter name"></p:inputText>
+									
+									
+									</h:panelGrid>
+
+							<div align="right">
+								<p:commandButton value="Submit"
+									action="#{offerCategoryBean.saveCategory()}"
+									update=":lazyCategoryTable" ajax="true">
+
+								</p:commandButton>
+							</div>
+
+						</p:fieldset>
+
+
+
+					</h:form>
+
+				</div>
+			</div>
+			<p:dataTable id="lazyCategoryTable" styleClass="default_tab"
+				style="background:#dfdfdf; width:100%; margin-bottom:15px;"
+				var="u" value="#{offerCategoryBean.getOfferCategories()}"
+				paginator="true"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15,20,30,40,60,100"
+				paginatorAlwaysVisible="true" paginatorPosition="bottom" rows="10"
+				emptyMessage="No Record found..." lazy="true">
+				<f:facet name="header">
+       				 List of Offer Categories
+  				  </f:facet>
+				<p:column headerText="Category Id">
+					<h:outputText value="#{u.categoryId}" />
+
+				</p:column>
+
+				<p:column headerText="Category Name">
+					<h:outputText value="#{u.name}" />
+
+				</p:column>
+				
+				<p:column headerText="Category Type">
+					<h:outputText value="#{u.getCategoryTranslation()}" />
+
+				</p:column>
+
+				
+				
+
+			</p:dataTable>
+		</div>
+	</ui:define>
+
+</ui:composition>
