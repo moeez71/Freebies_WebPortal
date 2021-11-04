@@ -47,11 +47,11 @@
 
     <property
         name="TOMCAT_LIB_DIR"
-        value="${env.TOMCAT7_LIB_DIR}" />
+        value="/home/moeez71/development/apache-tomcat-7.0.42/lib" />
 
     <property
         name="JRE_LIB_DIR"
-        value="${env.JRE8_LIB_DIR}" />
+        value="/home/moeez71/development/jdk1.6.0_91/jre/lib" />
 
     <path id="class.path" >
 
